@@ -1,8 +1,9 @@
 #-----------------------------------------
-# The following code is adapted from the code accompanying ''Curve classes on conic bundle threefolds and applications to rationality'' by Frei, Ji, Sankar, Viray and Vogt.
+# The following code is adapted from the Magma code accompanying ''Curve classes on conic bundle threefolds and applications to rationality'' by Frei, Ji, Sankar, Viray, and Vogt.
 #-----------------------------------------
 #INPUT: Q1, Q2, Q3, appropriate plane conics with Rational Coefficients
 #OUTPUT: The real Weierstrass points of the associated hyperelliptic curve Gamma and the signatures in the interval
+#We note that in this (and all accompanying Sage code), we use the variables x,y,z (whereas in the paper we use the variables u,v,w).
 
 import warnings
 warnings.filterwarnings("ignore")
@@ -62,17 +63,17 @@ def print_signature(M1, M2, M3):
             
     return signature_list;
 
-#check whether the discriminant curve is non-singular
+#check whether the discriminant curve Delta is smooth
 def is_delta_smooth(f):
     Grad=ideal(f,diff(f,x),diff(f,y),diff(f,z))
     if Grad.dimension()==0:
-        print("The discriminant curve is smooth.")
+        print("Delta is smooth.")
         return True
     else:
-        print("The discriminant curve is not smooth.")
+        print("Delta is not smooth.")
         return False
 
-#check whether the double cover (delta tilde) is non-singular
+#check whether the curve Deltatilde is smooth
 def is_double_cover_smooth(q1, q2, q3):
     R.<x,y,z,r,s> = ProjectiveSpace(F, 4);
 
@@ -83,13 +84,13 @@ def is_double_cover_smooth(q1, q2, q3):
     delta_tilde = R.curve([q1_t, q2_t, q3_t]);
 
     if delta_tilde.is_singular():
-        print("The double cover is not smooth.");
+        print("Deltatilde is not smooth.");
         return False;
     else:
-        print("The double cover is also smooth.");
+        print("Deltatilde is also smooth.");
         return True;
 
-# Converts a given Quadratic Form of 3 variables to its associated Symmetric Matrix
+# Converts a given quadratic form in 3 variables to its associated symmetric matrix
 def conic_to_matrix(qt):
     a = Rational(qt.coefficient(x^2))
     b = Rational(qt.coefficient(y^2))
