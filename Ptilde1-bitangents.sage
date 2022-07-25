@@ -138,7 +138,7 @@ def galois_matrix(q1, q2, q3, bitangent, z_val):
         print("Q2 : " + str(q2_val));
         
         # Adjusting r and s based on Q2(x, y, z)
-        if abs(q2_val - c3*c4) < 0.00001:
+        if abs(q2_val - c3*c4) < abs(q2_val - -1*c3*c4):
             row1 = [c1, c2, z_val, c3, c4]
             row2 = [c1, c2, z_val, -c3, -c4]
         else:
