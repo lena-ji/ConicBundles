@@ -1,6 +1,7 @@
-#INPUT: Q1, Q2, Q3, appropriate plane conics with Rational Coefficients
-#OUTPUT: The 5 x 4 matrices formed by points of DeltaTilde over  the intersection
-# of the real bitangents of Delta := Q1*Q3 - Q2^2 with Delta. Checks whether or not they are full-rank.
+#INPUT: Q1, Q2, Q3, appropriate quadratic forms in x,y,z with rational coefficients
+#OUTPUT: The 5 x 4 matrices formed by points of Deltatilde over the intersection
+# of Delta := (Q1*Q3 - Q2^2=0) with each of its real bitangents. Checks whether the support of the points on Deltatilde spans a 3-plane in P^4.
+#We note that in this (and all accompanying Sage code), we use the variables x,y,z (whereas in the paper we use the variables u,v,w).
 import numpy as np
 
 F=QQ
@@ -44,17 +45,17 @@ def prune_similar(lst):
             unique.append(elt);
     return unique;
 
-#check whether the discriminant curve is non-singular
+#check whether the discriminant curve Delta is smooth
 def is_delta_smooth(f):
     Grad=ideal(f,diff(f,x),diff(f,y),diff(f,z))
     if Grad.dimension()==0:
-        print("The discriminant curve is smooth.")
+        print("Delta is smooth.")
         return True
     else:
-        print("The discriminant curve is not smooth.")
+        print("Delta is not smooth.")
         return False
 
-#check whether the double cover (delta tilde) is non-singular
+#check whether Deltatilde is smooth
 def is_double_cover_smooth(q1, q2, q3):
     R.<x,y,z,r,s> = ProjectiveSpace(F, 4);
 
@@ -65,10 +66,10 @@ def is_double_cover_smooth(q1, q2, q3):
     delta_tilde = R.curve([q1_t, q2_t, q3_t]);
 
     if delta_tilde.is_singular():
-        print("The double cover is not smooth.");
+        print("Deltatilde is not smooth.");
         return False;
     else:
-        print("The double cover is also smooth.");
+        print("Deltatilde is also smooth.");
         return True;
 
 # Takes in the standard 5x4 Gal(C/R)-matrix (Double Array) and outputs the determinant of all 5 of its
@@ -88,8 +89,8 @@ def process_matrix(M):
         # print("Close to Zero: " + str(abs(new_det) < bound));
         # print("--------");
 
-# Given Q1, Q2, Q3, the bitangent line, and a z-value
-# Produces the 5x4 matrix with the 4 points on DeltaTilde given by the bitangent line and Delta
+# Given Q1, Q2, Q3, a real bitangent of Delta, and a z-value
+# Produces the 5x4 matrix with the 4 points on Deltatilde given by the intersection of Delta with this real bitangent
 # The matrix is checked to be full-rank or not
 # Returns True if processed successfully, False otherwise
 def galois_matrix(q1, q2, q3, bitangent, z_val):
@@ -101,7 +102,7 @@ def galois_matrix(q1, q2, q3, bitangent, z_val):
     
     Delta = Q1*Q3 - Q2^2;
 
-    print("Intersection on Delta and Bitangent on z = 1");
+    print("Intersection of Delta and Bitangent on z = 1");
 
     # Remove duplicate roots resulted from imprecision of Sage's solve function
     roots = solve([Delta == 0, T == 0], x, y)
