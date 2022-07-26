@@ -46,10 +46,10 @@ def print_signature(M1, M2, M3):
     print("Gamma: " + str(char_poly));
     root_list = list(map(lambda x: x[0], char_poly.roots()));
     length = len(root_list);
-    print("Real Weierstrass Points: " + str(root_list));   
+    print("Images of real Weierstrass Points (over the chart [t:1] of P^1): " + str(root_list));   
     
     if length == 0:
-        print("No Real Weierstrass Points");
+        print("No real Weierstrass points");
         num_sig = signature(make_matrix(M1, M2, M3, 1));
         signature_list.append(num_sig);
         print(num_sig);
