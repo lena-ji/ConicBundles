@@ -46,7 +46,7 @@ def print_signature(M1, M2, M3):
     print("Gamma: " + str(char_poly));
     root_list = list(map(lambda x: x[0], char_poly.roots()));
     length = len(root_list);
-    print("Images of real Weierstrass Points (over the chart [t:1] of P^1): " + str(root_list));   
+    print("Real branch points of Gamma (on the chart [t:1] of P^1): " + str(root_list));   
     
     if length == 0:
         print("No real Weierstrass points");
