@@ -4,7 +4,7 @@ S = R[x, y, z];
 T = R[t];
 
 -- Helper Function --------------------------------------------------------------
--- Given a quadratic form of 3 variables, returns its associated Symmetric Matrix
+-- Given a quadratic form of 3 variables, returns its associated symmetric matrix
 Symmetric = (Q) -> (
 (M,C) := coefficients(Q, Monomials=>{x^2, y^2, z^2, x*y, y*z, x*z});
 matrix {{C_(0, 0), C_(3, 0)/2, C_(5, 0)/2},
