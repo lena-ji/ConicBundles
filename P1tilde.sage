@@ -158,10 +158,10 @@ def galois_matrix(q1, q2, q3, line, z_val):
 
 def main():
     # inputs:
-    Q1 = -x^2 - y^2 - z^2;
-    Q2 = -5*x^2 + 5*z^2;
-    Q3 = -24*x^2 + 4*y^2 - 24*z^2;
-    lines = [x + y + z];
+    Q1 = -2*x^2 - 2*x*y + 4*x*z - 2*y^2 + 6*y*z - 5*z^2;
+    Q2 = 10*x*y - 20*x*z + 5*y^2 - 20*y*z + 20*z^2;
+    Q3 = -48*x^2 - 48*x*y + 96*x*z - 20*y^2 + 88*y*z - 92*z^2;
+    lines = [y];
     
     Delta = Q1*Q3 - Q2^2;
     z_val = 1;
