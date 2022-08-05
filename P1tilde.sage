@@ -1,6 +1,8 @@
 #INPUT: Q1, Q2, Q3, appropriate quadratic forms in x,y,z with rational coefficients, and a list of homogeneous degree 1 forms in x,y,z with rational coefficients
 #OUTPUT: The 5 x 4 matrices formed by points of Deltatilde over the intersection
-# of Delta := (Q1*Q3 - Q2^2=0) and each line in the list given. Checks whether the support of the points on Deltatilde spans a 3-plane in P^4.
+#of Delta := (Q1*Q3 - Q2^2=0) and each line in the list given (the code will ignore cases where the intersection contains real points).
+#Checks whether the support of the points on Deltatilde spans a 3-plane in P^4.
+
 #We note that in this (and all accompanying Sage code), we use the variables x,y,z (whereas in the paper we use the variables u,v,w).
 import numpy as np
 
@@ -72,6 +74,18 @@ def is_double_cover_smooth(q1, q2, q3):
         print("Deltatilde is also smooth.");
         return True;
 
+# Given a list of expressions of the form (x == r, y == s), finds the real expressions in them
+# We consider a value to be real if its imaginary component is less than a certain threshold
+def find_real_roots(lst):
+    real_roots = []
+    for root in lst:
+        c1 = (root[0] + I - I).rhs();
+        c2 = (root[1] + I - I).rhs();
+        
+        if abs(c1.imag()) < 0.0001 and abs(c2.imag()) < 0.0001:
+            real_roots.append(root)
+    return real_roots
+    
 # Takes in the standard 5x4 Gal(C/R)-matrix (Double Array) and outputs the determinant of all 5 of its
 # 4 x 4 submatrices
 def process_matrix(M):
@@ -108,11 +122,17 @@ def galois_matrix(q1, q2, q3, line, z_val):
     roots = solve([Delta == 0, T == 0], x, y)
     roots = prune_similar(roots);
     print(roots);
+    print("-------------------------");
     
     if len(roots) < 4:
-        print("The line does not have at least 4 intersections with Delta");
+        print("The line does not have at least 4 intersections with Delta!");
         return False;
-    print("-------------------------");
+    
+    real_roots = find_real_roots(roots);
+    if len(real_roots) != 0:
+        print("This line intersects with Delta on real points:");
+        print(real_roots);
+        return False;
 
     gal_matrix = [];
     
